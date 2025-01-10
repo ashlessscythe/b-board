@@ -123,7 +123,7 @@ async function main() {
       email: "bob@bob.bob",
       name: "Bob",
       password: bobHash,
-      role: Role.CONTRIBUTOR,
+      role: Role.ADMIN,
       departments: {
         connect: departmentIds.map((id) => ({ id })),
       },

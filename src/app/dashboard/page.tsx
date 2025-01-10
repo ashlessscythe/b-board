@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import { getAnnouncements } from "@/app/actions/announcements";
+import { Role } from "@prisma/client";
 
 export default async function DashboardPage() {
   const announcements = await getAnnouncements();
@@ -13,13 +14,13 @@ export default async function DashboardPage() {
   }
 
   // Redirect viewers to their specific view
-  if (session.user.role === "VIEWER") {
+  if (session.user.role === Role.VIEWER) {
     redirect("/bulletins");
   }
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">Contributor Dashboard</h1>
+      <h1 className="text-2xl font-bold mb-6">Management Dashboard</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Quick Stats */}

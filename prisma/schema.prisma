@@ -14,6 +14,7 @@ enum Role {
   PENDING
   CONTRIBUTOR
   VIEWER
+  ADMIN
 }
 
 model User {

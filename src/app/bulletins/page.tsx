@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import { getAnnouncements } from "@/app/actions/announcements";
+import { Role } from "@prisma/client";
 
 export default async function BulletinsPage() {
   const session = await getServerSession(authOptions);
@@ -18,7 +19,11 @@ export default async function BulletinsPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">Department Bulletins</h1>
+      <h1 className="text-2xl font-bold mb-6">
+        {session.user.role === Role.ADMIN
+          ? "All Bulletins"
+          : "Department Bulletins"}
+      </h1>
 
       <div className="space-y-6">
         {/* Search and Filter */}

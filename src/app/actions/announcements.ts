@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
+import { Role } from "@prisma/client";
 
 interface CreateAnnouncementData {
   title: string;
@@ -20,7 +21,10 @@ export async function createAnnouncement(data: CreateAnnouncementData) {
     throw new Error("Not authenticated");
   }
 
-  if (session.user.role !== "CONTRIBUTOR") {
+  if (
+    session.user.role !== Role.CONTRIBUTOR &&
+    session.user.role !== Role.ADMIN
+  ) {
     throw new Error("Not authorized");
   }
 
@@ -55,17 +59,20 @@ export async function getAnnouncements(departmentIds?: string[]) {
 
   try {
     const announcements = await prisma.announcement.findMany({
-      where: departmentIds
-        ? {
-            departments: {
-              some: {
-                id: {
-                  in: departmentIds,
+      where:
+        session.user.role === Role.ADMIN
+          ? undefined // Admin sees all announcements
+          : departmentIds
+          ? {
+              departments: {
+                some: {
+                  id: {
+                    in: departmentIds,
+                  },
                 },
               },
-            },
-          }
-        : undefined,
+            }
+          : undefined,
       include: {
         departments: true,
         author: {

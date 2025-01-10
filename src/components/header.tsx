@@ -2,6 +2,7 @@
 
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
+import { Role } from "@prisma/client";
 
 export function Header() {
   const { data: session, status } = useSession();
@@ -15,6 +16,40 @@ export function Header() {
               B-Board
             </Link>
           </div>
+          <nav className="hidden md:flex items-center gap-6 mx-6">
+            {session?.user?.role === Role.ADMIN && (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="text-sm text-muted-foreground hover:text-foreground"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  href="/bulletins"
+                  className="text-sm text-muted-foreground hover:text-foreground"
+                >
+                  Bulletins
+                </Link>
+              </>
+            )}
+            {session?.user?.role === Role.CONTRIBUTOR && (
+              <Link
+                href="/dashboard"
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
+                Dashboard
+              </Link>
+            )}
+            {session?.user?.role === Role.VIEWER && (
+              <Link
+                href="/bulletins"
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
+                Bulletins
+              </Link>
+            )}
+          </nav>
           <div>
             {status === "loading" ? (
               <span className="text-muted-foreground">Loading...</span>
