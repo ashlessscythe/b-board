@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CONTRIBUTOR
+  VIEWER
+}
+
+model User {
+  id            String        @id @default(cuid())
+  email         String        @unique
+  name          String?
+  role          Role
+  password      String        // Hashed password
+  departments   Department[]  // Many-to-many with departments
+  announcements Announcement[] // One-to-many with announcements (for contributors)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Department {
+  id            String        @id @default(cuid())
+  name          String        @unique
+  users         User[]        // Many-to-many with users
+  announcements Announcement[] // Many-to-many with announcements
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Announcement {
+  id          String       @id @default(cuid())
+  title       String
+  description String       @db.Text
+  startDate   DateTime
+  endDate     DateTime?
+  archived    Boolean      @default(false)
+  author      User         @relation(fields: [authorId], references: [id])
+  authorId    String
+  departments Department[] // Many-to-many with departments
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([authorId])
+}
