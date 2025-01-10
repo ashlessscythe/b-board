@@ -1,7 +1,14 @@
-import { NextAuthOptions } from "next-auth";
+import { JWT } from "next-auth/jwt";
+import { NextAuthOptions, Session, User as NextAuthUser } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "./db";
 import { compare } from "bcrypt";
+import { Department } from "@prisma/client";
+
+interface User extends NextAuthUser {
+  role: "PENDING" | "CONTRIBUTOR" | "VIEWER" | "ADMIN";
+  departments: Department[];
+}
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -56,7 +63,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async session({ token, session }: { token: any; session: any }) {
+    async session({ token, session }: { token: JWT; session: Session }) {
       if (token) {
         session.user.id = token.id as string;
         session.user.name = token.name;
@@ -70,7 +77,7 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
-    async jwt({ token, user }: { token: any; user: any }) {
+    async jwt({ token, user }: { token: JWT; user: User | null }) {
       if (user) {
         token.id = user.id;
         token.role = user.role;

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 export async function GET() {
   try {
@@ -46,13 +47,15 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json(department, { status: 201 });
-  } catch (error: any) {
-    // Handle unique constraint violation
-    if (error.code === "P2002") {
-      return NextResponse.json(
-        { error: "Department already exists" },
-        { status: 409 }
-      );
+  } catch (error) {
+    if (error instanceof PrismaClientKnownRequestError) {
+      // Handle unique constraint violation
+      if (error.code === "P2002") {
+        return NextResponse.json(
+          { error: "Department already exists" },
+          { status: 409 }
+        );
+      }
     }
 
     console.error("Failed to create department:", error);

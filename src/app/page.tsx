@@ -31,7 +31,7 @@ export default async function Home() {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">Welcome to B-Board</h1>
           <p className="text-lg text-muted-foreground mb-4">
-            Your Department's Digital Bulletin Board System
+            Your Department&apos;s Digital Bulletin Board System
           </p>
           <p className="text-sm text-red-500 mb-8">
             WARNING: Unauthorized use of this system is strictly prohibited and
