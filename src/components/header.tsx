@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 
 export function Header() {
@@ -23,26 +23,27 @@ export function Header() {
                 <span className="text-sm text-muted-foreground">
                   {session.user?.name} ({session.user?.role?.toLowerCase()})
                 </span>
-                <Link
-                  href="/api/auth/signout"
+                <button
+                  onClick={() => signOut({ callbackUrl: "/" })}
                   className="text-sm text-muted-foreground hover:text-foreground"
                 >
                   Sign out
-                </Link>
+                </button>
               </div>
             ) : (
               <div className="flex items-center gap-4">
                 <Link
-                  href="/login?role=contributor"
+                  href="/login"
                   className="text-sm text-muted-foreground hover:text-foreground"
                 >
-                  Contributor Login
+                  Sign in
                 </Link>
+                <span className="text-muted-foreground">·</span>
                 <Link
-                  href="/login?role=viewer"
+                  href="/signup"
                   className="text-sm text-muted-foreground hover:text-foreground"
                 >
-                  Viewer Login
+                  Sign up
                 </Link>
               </div>
             )}

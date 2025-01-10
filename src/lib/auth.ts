@@ -9,6 +9,7 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/login",
+    signOut: "/",
   },
   providers: [
     CredentialsProvider({
@@ -51,21 +52,32 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async session({ token, session }) {
+    async session({ token, session }: { token: any; session: any }) {
       if (token) {
         session.user.id = token.id as string;
         session.user.name = token.name;
         session.user.email = token.email;
-        session.user.role = token.role as "CONTRIBUTOR" | "VIEWER";
+        session.user.role = token.role as "PENDING" | "CONTRIBUTOR" | "VIEWER";
       }
       return session;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user }: { token: any; user: any }) {
       if (user) {
         token.id = user.id;
         token.role = user.role;
       }
       return token;
+    },
+    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
+      // If it's a relative URL, prefix it with baseUrl
+      const returnUrl = url.startsWith("/") ? `${baseUrl}${url}` : url;
+
+      // If it's not an internal URL, redirect to homepage
+      if (!returnUrl.startsWith(baseUrl)) {
+        return baseUrl;
+      }
+
+      return returnUrl;
     },
   },
 };

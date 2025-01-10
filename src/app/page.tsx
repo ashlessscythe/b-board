@@ -13,8 +13,13 @@ export default function Home() {
       <main className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">Welcome to B-Board</h1>
-          <p className="text-lg text-muted-foreground mb-8">
+          <p className="text-lg text-muted-foreground mb-4">
             Your Department's Digital Bulletin Board System
+          </p>
+          <p className="text-sm text-red-500 mb-8">
+            WARNING: Unauthorized use of this system is strictly prohibited and
+            may result in disciplinary action. All activities are monitored and
+            logged.
           </p>
         </div>
 
@@ -80,15 +85,9 @@ export default function Home() {
         <div className="flex gap-4 items-center justify-center">
           <a
             className="rounded-lg bg-primary text-primary-foreground shadow hover:bg-primary/90 px-8 py-3 font-medium"
-            href="/login?role=contributor"
+            href="/login"
           >
-            Login as Contributor
-          </a>
-          <a
-            className="rounded-lg border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground px-8 py-3 font-medium"
-            href="/login?role=viewer"
-          >
-            Login as Viewer
+            Get Started
           </a>
         </div>
       </main>
