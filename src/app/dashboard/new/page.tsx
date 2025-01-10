@@ -25,7 +25,7 @@ export default async function NewAnnouncementPage() {
           <BackButton />
         </div>
 
-        <div className="bg-white shadow rounded-lg p-6">
+        <div className="bg-card shadow rounded-lg p-6">
           <NewAnnouncementForm />
         </div>
       </div>

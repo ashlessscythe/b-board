@@ -3,6 +3,7 @@
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { Role } from "@prisma/client";
+import { ThemeToggle } from "./theme-toggle";
 
 export function Header() {
   const { data: session, status } = useSession();
@@ -55,6 +56,7 @@ export function Header() {
               <span className="text-muted-foreground">Loading...</span>
             ) : session ? (
               <div className="flex items-center gap-4">
+                <ThemeToggle />
                 <span className="text-sm text-muted-foreground">
                   {session.user?.name} ({session.user?.role?.toLowerCase()})
                 </span>
@@ -67,6 +69,7 @@ export function Header() {
               </div>
             ) : (
               <div className="flex items-center gap-4">
+                <ThemeToggle />
                 <Link
                   href="/login"
                   className="text-sm text-muted-foreground hover:text-foreground"

@@ -47,7 +47,7 @@ export default function BulletinsClient({
       <div className="space-y-6">
         {/* Search and Filter */}
         <form
-          className="bg-white p-4 rounded-lg shadow"
+          className="bg-card p-4 rounded-lg shadow"
           onSubmit={(e) => e.preventDefault()}
         >
           <div className="flex flex-col md:flex-row gap-4">
@@ -72,7 +72,7 @@ export default function BulletinsClient({
                     setAnnouncements([]);
                   });
               }}
-              className="px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
             >
               {initialDepartments.map((dept: Department) => (
                 <option key={dept.id} value={dept.id}>
@@ -84,31 +84,31 @@ export default function BulletinsClient({
               type="text"
               placeholder="Search announcements..."
               aria-label="Search announcements"
-              className="flex-1 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
             />
             <input
               type="date"
               aria-label="Filter by date"
-              className="px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
             />
           </div>
         </form>
 
         {/* Announcements List */}
-        <div className="bg-white rounded-lg shadow divide-y">
+        <div className="bg-card rounded-lg shadow divide-y">
           {announcements.length === 0 ? (
-            <div className="p-8 text-center text-gray-500">
+            <div className="p-8 text-center text-muted-foreground">
               No announcements available for your department
             </div>
           ) : (
             <div className="divide-y">
               {announcements.map((announcement) => (
-                <div key={announcement.id} className="p-6 hover:bg-gray-50">
+                <div key={announcement.id} className="p-6 hover:bg-accent">
                   <div className="flex justify-between items-start mb-2">
                     <h2 className="text-xl font-semibold">
                       {announcement.title}
                     </h2>
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-muted-foreground">
                       <div>
                         {formatDate(announcement.startDate)} -{" "}
                         {formatDate(announcement.endDate)}
@@ -119,14 +119,14 @@ export default function BulletinsClient({
                       </div>
                     </div>
                   </div>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-muted-foreground mb-4">
                     {announcement.description}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {announcement.departments.map((dept) => (
                       <span
                         key={dept.id}
-                        className="px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded"
+                        className="px-2 py-1 bg-accent text-accent-foreground text-sm rounded"
                       >
                         {dept.name}
                       </span>

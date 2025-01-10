@@ -59,7 +59,7 @@ export default function AnnouncementForm({
       <div>
         <label
           htmlFor="title"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-foreground"
         >
           Title
         </label>
@@ -70,7 +70,7 @@ export default function AnnouncementForm({
           onChange={(e) =>
             setFormData((prev) => ({ ...prev, title: e.target.value }))
           }
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
           required
         />
       </div>
@@ -78,7 +78,7 @@ export default function AnnouncementForm({
       <div>
         <label
           htmlFor="description"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-foreground"
         >
           Description
         </label>
@@ -89,7 +89,7 @@ export default function AnnouncementForm({
             setFormData((prev) => ({ ...prev, description: e.target.value }))
           }
           rows={4}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
           required
         />
       </div>
@@ -98,7 +98,7 @@ export default function AnnouncementForm({
         <div>
           <label
             htmlFor="startDate"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-foreground"
           >
             Start Date
           </label>
@@ -109,7 +109,7 @@ export default function AnnouncementForm({
             onChange={(e) =>
               setFormData((prev) => ({ ...prev, startDate: e.target.value }))
             }
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
             required
           />
         </div>
@@ -117,7 +117,7 @@ export default function AnnouncementForm({
         <div>
           <label
             htmlFor="endDate"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-foreground"
           >
             End Date
           </label>
@@ -128,29 +128,29 @@ export default function AnnouncementForm({
             onChange={(e) =>
               setFormData((prev) => ({ ...prev, endDate: e.target.value }))
             }
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
             required
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-foreground mb-2">
           Departments
         </label>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
           {departments.map((dept) => (
             <label
               key={dept.id}
-              className="inline-flex items-center p-2 border rounded hover:bg-gray-50 cursor-pointer"
+              className="inline-flex items-center p-2 border rounded hover:bg-accent cursor-pointer"
             >
               <input
                 type="checkbox"
                 checked={formData.departments.includes(dept.id)}
                 onChange={() => handleDepartmentToggle(dept.id)}
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                className="h-4 w-4 text-primary focus:ring-primary border rounded"
               />
-              <span className="ml-2 text-sm text-gray-700">{dept.name}</span>
+              <span className="ml-2 text-sm text-foreground">{dept.name}</span>
             </label>
           ))}
         </div>
@@ -160,7 +160,7 @@ export default function AnnouncementForm({
         <button
           type="submit"
           disabled={isSubmitting}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? "Saving..." : "Save Announcement"}
         </button>
