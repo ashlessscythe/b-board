@@ -27,6 +27,9 @@ export const authOptions: NextAuthOptions = {
           where: {
             email: credentials.email,
           },
+          include: {
+            departments: true,
+          },
         });
 
         if (!user) {
@@ -47,6 +50,7 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
           name: user.name,
           role: user.role,
+          departments: user.departments,
         };
       },
     }),
@@ -58,6 +62,7 @@ export const authOptions: NextAuthOptions = {
         session.user.name = token.name;
         session.user.email = token.email;
         session.user.role = token.role as "PENDING" | "CONTRIBUTOR" | "VIEWER";
+        session.user.departments = token.departments;
       }
       return session;
     },
@@ -65,6 +70,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id;
         token.role = user.role;
+        token.departments = user.departments;
       }
       return token;
     },

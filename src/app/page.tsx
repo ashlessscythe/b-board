@@ -1,4 +1,7 @@
 import Image from "next/image";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "@/lib/auth";
 import {
   Card,
   CardContent,
@@ -7,7 +10,21 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+
+  // Redirect authenticated users based on their role
+  if (session?.user) {
+    switch (session.user.role) {
+      case "PENDING":
+        redirect("/pending");
+      case "CONTRIBUTOR":
+        redirect("/dashboard");
+      case "VIEWER":
+        redirect("/bulletins");
+    }
+  }
+
   return (
     <div className="min-h-screen p-8 pb-20 font-[family-name:var(--font-geist-sans)]">
       <main className="max-w-7xl mx-auto">

@@ -46,6 +46,10 @@ export default function LoginPage() {
       // Redirect based on role
       if (session?.user?.role === "PENDING") {
         router.push("/pending");
+      } else if (session?.user?.role === "CONTRIBUTOR") {
+        router.push("/dashboard");
+      } else if (session?.user?.role === "VIEWER") {
+        router.push("/bulletins");
       } else {
         router.push(callbackUrl);
       }
